@@ -87,19 +87,36 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
     this.arObjectManager!.onRotationEnd = onRotationEnded;
   }
 
-  Future<void> placeduck () async {
-    var x =  await arSessionManager!.getCameraPose()??Matrix4(0.999755322933197,-1.6543612251060553e-24,-0.022120321169495583,-0.0002655917778611183,-1.8874905002255505e-18,1.0,-8.530755347162247e-17,-0.4026282727718353,0.022120321169495583,8.532843812772821e-17,0.999755322933197,-0.8169512748718262, 0.0,0.0,0.0,1.0);
+  Future<void> placeduck() async {
+    var x = await arSessionManager!.getCameraPose() ??
+        Matrix4(
+            0.999755322933197,
+            -1.6543612251060553e-24,
+            -0.022120321169495583,
+            -0.0002655917778611183,
+            -1.8874905002255505e-18,
+            1.0,
+            -8.530755347162247e-17,
+            -0.4026282727718353,
+            0.022120321169495583,
+            8.532843812772821e-17,
+            0.999755322933197,
+            -0.8169512748718262,
+            0.0,
+            0.0,
+            0.0,
+            1.0);
     var anchor = ARPlaneAnchor(transformation: x);
     arAnchorManager!.addAnchor(anchor);
 
     var newNode = ARNode(
-            type: NodeType.webGLB,
-            uri:
-                "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-            scale: Vector3(0.2, 0.2, 0.2),
-            position: Vector3( 0.011439, -0.00871425, 0.0558426),
-            rotation: Vector4( 0.534616, -0.525168,  -0.468367, 0.467992));
-            this.arObjectManager!.addNode(newNode, planeAnchor: anchor);
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
+        scale: Vector3(0.2, 0.2, 0.2),
+        position: Vector3(0.011439, -0.00871425, -0.5),
+        rotation: Vector4(0.534616, -0.525168, -0.468367, 0.467992));
+    this.arObjectManager!.addNode(newNode, planeAnchor: anchor);
   }
 
   Future<void> onRemoveEverything() async {
@@ -111,7 +128,6 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
     });
     anchors = [];
   }
-  
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
@@ -132,8 +148,9 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
             scale: Vector3(0.2, 0.2, 0.2),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-        bool? didAddNodeToAnchor =
-            await this.arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
+        bool? didAddNodeToAnchor = await this
+            .arObjectManager!
+            .addNode(newNode, planeAnchor: newAnchor);
         if (didAddNodeToAnchor!) {
           this.nodes.add(newNode);
           print("this is a node = >${nodes}");
