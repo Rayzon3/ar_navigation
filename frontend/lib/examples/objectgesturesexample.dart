@@ -25,8 +25,11 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
 
-  List<ARNode> nodes = [];
-  List<ARAnchor> anchors = [];
+  // List<ARNode> nodes = [];
+  // List<ARAnchor> anchors = [];
+
+  List nodes = [];
+  List anchors = [];
 
   @override
   void dispose() {
