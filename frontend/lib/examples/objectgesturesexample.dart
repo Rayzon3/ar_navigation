@@ -13,6 +13,9 @@ import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'dart:math';
+import 'package:dio/dio.dart';
+
+final dio = Dio();
 
 class ObjectGesturesWidget extends StatefulWidget {
   ObjectGesturesWidget({Key? key}) : super(key: key);
@@ -25,11 +28,11 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
 
-  // List<ARNode> nodes = [];
-  // List<ARAnchor> anchors = [];
+  List<ARNode> nodes = [];
+  List<ARAnchor> anchors = [];
 
-  List nodes = [];
-  List anchors = [];
+  // List nodes = [];
+  // List anchors = [];
 
   @override
   void dispose() {
@@ -56,7 +59,9 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
                 children: [
                   ElevatedButton(
                       onPressed: placeduck,
-                      child: Text("Add a node in front of you")),
+                      child: const Text("Add a node in front of you")),
+                  ElevatedButton(
+                      onPressed: testConn, child: const Text("Upload Path")),
                 ]),
           )
         ])));
@@ -88,6 +93,17 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
     this.arObjectManager!.onRotationStart = onRotationStarted;
     this.arObjectManager!.onRotationChange = onRotationChanged;
     this.arObjectManager!.onRotationEnd = onRotationEnded;
+  }
+
+  void testConn() async {
+    var res = await dio.get("http://localhost:8080");
+    print(res);
+  }
+
+  void onUpload() async {
+    var res = await dio.post("http://localhost:8080/uploadPath",
+        data: {"arAnchorList": anchors});
+    print(res);
   }
 
   Future<void> placeduck() async {

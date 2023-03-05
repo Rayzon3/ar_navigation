@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export const addARAnchors = async (req: Request, res: Response) => {
+export const uploadARAnchors = async (req: Request, res: Response) => {
   const { arAnchorList } = req.body;
 
   try {
