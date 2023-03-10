@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
+
 import 'examples/objectgesturesexample.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,8 +50,17 @@ class _MyAppState extends State<MyApp> {
   }
 
   void testConn() async {
-    var res = await dio.get("http://localhost:8080");
-    print(res);
+    Response res = await dio.get(
+        "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/getPath");
+    var x = res.data[0]["transformation"];
+    print(x[0].runtimeType);
+    // ARTransformation arTransformation =
+    //     ARTransformation.fromJson(jsonDecode(res.data));
+    // List<dynamic> data = jsonDecode(res.data);
+
+    // for (var ARnode in data) {
+    //   print(ARnode["transformation"]);
+    // }
   }
 
   @override
@@ -56,16 +70,16 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text(_title),
         ),
-        // body: Column(children: [
-        //   Text('Running on: $_platformVersion\n'),
-        //   Expanded(
-        //     child: ExampleList(),
-        //   ),
-        // ]),
-        body: ElevatedButton(
-          onPressed: testConn,
-          child: const Text("Test Backend Conn"),
-        ),
+        body: Column(children: [
+          Text('Running on: $_platformVersion\n'),
+          Expanded(
+            child: ExampleList(),
+          ),
+        ]),
+        // body: ElevatedButton(
+        //   onPressed: testConn,
+        //   child: const Text("Test Backend Conn"),
+        // ),
       ),
     );
   }

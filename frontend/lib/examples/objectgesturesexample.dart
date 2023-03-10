@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
@@ -61,7 +63,9 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
                       onPressed: placeduck,
                       child: const Text("Add a node in front of you")),
                   ElevatedButton(
-                      onPressed: testConn, child: const Text("Upload Path")),
+                      onPressed: onUpload, child: const Text("Upload Path")),
+                  ElevatedButton(
+                      onPressed: onFetchARNodes, child: const Text("Get Path")),
                 ]),
           )
         ])));
@@ -97,13 +101,78 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
 
   void testConn() async {
     var res = await dio.get("http://localhost:8080");
-    print(res);
+    print(res.data);
   }
 
   void onUpload() async {
-    var res = await dio.post("http://localhost:8080/uploadPath",
+    var res = await dio.post(
+        "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/uploadPath",
         data: {"arAnchorList": anchors});
     print(res);
+  }
+
+  void onFetchARNodes() async {
+    var res = await dio.get(
+        "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/getPath");
+
+    // List<ARAnchor> ResAnchors = [];
+
+    // for (int i = 0; i < res.data.length; i++) {
+    //   ResAnchors[i] = res.data[i];
+    // }
+    // var x = json.decode(res.data);
+    // print(x);
+    // var x = await arSessionManager!.getCameraPose() ??
+    //     Matrix4(
+    //         0.999755322933197,
+    //         -1.6543612251060553e-24,
+    //         -0.022120321169495583,
+    //         -0.0002655917778611183,
+    //         -1.8874905002255505e-18,
+    //         1.0,
+    //         -8.530755347162247e-17,
+    //         -0.4026282727718353,
+    //         0.022120321169495583,
+    //         8.532843812772821e-17,
+    //         0.999755322933197,
+    //         -0.8169512748718262,
+    //         0.0,
+    //         0.0,
+    //         0.0,
+    //         1.0);
+    // var anchor = ARPlaneAnchor(transformation: x);
+
+    var newNode = ARNode(
+        type: NodeType.webGLB,
+        uri:
+            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
+        scale: Vector3(0.2, 0.2, 0.2),
+        position: Vector3(0.011439, -0.00871425, -0.5),
+        rotation: Vector4(0.534616, -0.525168, -0.468367, 0.467992));
+
+    for (int i = 0; i < res.data.length; i++) {
+      var x = res.data[i]["transformation"];
+      var anchor = ARPlaneAnchor(
+          transformation: Matrix4(
+              x[0].toDouble(),
+              x[1].toDouble(),
+              x[2].toDouble(),
+              x[3].toDouble(),
+              x[4].toDouble(),
+              x[5].toDouble(),
+              x[6].toDouble(),
+              x[7].toDouble(),
+              x[8].toDouble(),
+              x[9].toDouble(),
+              x[10].toDouble(),
+              x[11].toDouble(),
+              x[12].toDouble(),
+              x[13].toDouble(),
+              x[14].toDouble(),
+              x[15].toDouble()));
+      arAnchorManager!.addAnchor(anchor);
+      arObjectManager!.addNode(newNode, planeAnchor: anchor);
+    }
   }
 
   Future<void> placeduck() async {
@@ -136,6 +205,11 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
         position: Vector3(0.011439, -0.00871425, -0.5),
         rotation: Vector4(0.534616, -0.525168, -0.468367, 0.467992));
     this.arObjectManager!.addNode(newNode, planeAnchor: anchor);
+    bool? didAddAnchor =
+        await this.arObjectManager!.addNode(newNode, planeAnchor: anchor);
+    if (didAddAnchor!) {
+      anchors.add(anchor);
+    }
   }
 
   Future<void> onRemoveEverything() async {

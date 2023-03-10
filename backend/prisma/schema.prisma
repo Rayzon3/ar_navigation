@@ -10,6 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model MuseumOwner {
+  id       String  @id @default(cuid())
+
+}
+
 model ARAnchorMatrix{
   id    Int    @id @default(autoincrement())
   ARAnchorList  String[]
