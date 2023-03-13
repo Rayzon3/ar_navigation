@@ -30,7 +30,3 @@ model museum {
   ARAnchorList String[]
 }
 
-// model ARAnchorMatrix{
-//   id    Int    @id @default(autoincrement())
-//   ARAnchorList  String[]
-// }
