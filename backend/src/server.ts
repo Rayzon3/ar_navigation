@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 
 import pathRoutes from "../Routes/path"
+import museumOwnerRoutes from "../Routes/museumOwner"
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ const PORT = process.env.PORT;
 app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api/path", pathRoutes)
+app.use("/api/museumOwner", museumOwnerRoutes)
 
 
 

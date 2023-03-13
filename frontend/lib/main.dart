@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
 
-import 'examples/objectgesturesexample.dart';
+import 'path/createPath.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
@@ -21,7 +21,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  static const String _title = 'AR Plugin Demo';
+  static const String _title = 'AR Navigation';
 
   @override
   void initState() {
@@ -92,8 +92,8 @@ class ExampleList extends StatelessWidget {
   Widget build(BuildContext context) {
     final examples = [
       Example(
-          'Object Transformation Gestures',
-          'Rotate and Pan Objects',
+          'Create Custom Map',
+          '',
           () => Navigator.push(context,
               MaterialPageRoute(builder: (context) => ObjectGesturesWidget()))),
     ];

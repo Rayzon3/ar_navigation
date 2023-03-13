@@ -9,7 +9,7 @@ export const uploadARAnchors = async (req: Request, res: Response) => {
   const ARData = JSON.stringify(arAnchorList)
 
   try {
-    const anchorData = await prisma.aRAnchorMatrix.create({
+    const anchorData = await prisma.museum.create({
       data: {
         ARAnchorList: ARData,
       },
@@ -25,7 +25,7 @@ export const uploadARAnchors = async (req: Request, res: Response) => {
 
 export const getARAnchors = async (_: Request, res: Response) => {
   try{
-    const ARAnchorList = await prisma.aRAnchorMatrix.findMany();
+    const ARAnchorList = await prisma.museum.findMany();
     
     const ARData = JSON.parse(ARAnchorList[0].ARAnchorList[0])
 

@@ -10,12 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model MuseumOwner {
-  id       String  @id @default(cuid())
-
+model museumOwner {
+  id           String  @id @default(cuid())
+  firstName    String?
+  lastName     String?
+  email        String?  @unique
+  mobileNum    String?  @unique
+  password     String?
+  organisation String?
+  museum       museum?
 }
 
-model ARAnchorMatrix{
-  id    Int    @id @default(autoincrement())
-  ARAnchorList  String[]
+model museum {
+  id           String      @id @default(cuid())
+  owner        museumOwner? @relation(fields: [id], references: [id])
+  tags         String[]
+  inTime       String?
+  outTime      String?
+  ARAnchorList String[]
 }
+
+// model ARAnchorMatrix{
+//   id    Int    @id @default(autoincrement())
+//   ARAnchorList  String[]
+// }

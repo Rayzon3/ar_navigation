@@ -46,29 +46,32 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Object Transformation Gestures'),
+          title: const Text('AR Navigation'),
         ),
         body: Container(
+            padding: const EdgeInsets.all(16),
             child: Stack(children: [
-          ARView(
-            onARViewCreated: onARViewCreated,
-            planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
-          ),
-          Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                      onPressed: placeduck,
-                      child: const Text("Add a node in front of you")),
-                  ElevatedButton(
-                      onPressed: onUpload, child: const Text("Upload Path")),
-                  ElevatedButton(
-                      onPressed: onFetchARNodes, child: const Text("Get Path")),
-                ]),
-          )
-        ])));
+              ARView(
+                onARViewCreated: onARViewCreated,
+                planeDetectionConfig:
+                    PlaneDetectionConfig.horizontalAndVertical,
+              ),
+              Align(
+                alignment: FractionalOffset.bottomCenter,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          onPressed: placeduck, child: const Text("Add Node")),
+                      ElevatedButton(
+                          onPressed: onUpload,
+                          child: const Text("Upload Path 🚀")),
+                      ElevatedButton(
+                          onPressed: onFetchARNodes,
+                          child: const Text("Get Path")),
+                    ]),
+              )
+            ])));
   }
 
   void onARViewCreated(
@@ -109,38 +112,12 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
         "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/uploadPath",
         data: {"arAnchorList": anchors});
     print(res);
+    onRemoveEverything();
   }
 
   void onFetchARNodes() async {
     var res = await dio.get(
         "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/getPath");
-
-    // List<ARAnchor> ResAnchors = [];
-
-    // for (int i = 0; i < res.data.length; i++) {
-    //   ResAnchors[i] = res.data[i];
-    // }
-    // var x = json.decode(res.data);
-    // print(x);
-    // var x = await arSessionManager!.getCameraPose() ??
-    //     Matrix4(
-    //         0.999755322933197,
-    //         -1.6543612251060553e-24,
-    //         -0.022120321169495583,
-    //         -0.0002655917778611183,
-    //         -1.8874905002255505e-18,
-    //         1.0,
-    //         -8.530755347162247e-17,
-    //         -0.4026282727718353,
-    //         0.022120321169495583,
-    //         8.532843812772821e-17,
-    //         0.999755322933197,
-    //         -0.8169512748718262,
-    //         0.0,
-    //         0.0,
-    //         0.0,
-    //         1.0);
-    // var anchor = ARPlaneAnchor(transformation: x);
 
     var newNode = ARNode(
         type: NodeType.webGLB,
@@ -170,8 +147,9 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
               x[13].toDouble(),
               x[14].toDouble(),
               x[15].toDouble()));
-      arAnchorManager!.addAnchor(anchor);
-      arObjectManager!.addNode(newNode, planeAnchor: anchor);
+      await arAnchorManager!.addAnchor(anchor);
+      await arObjectManager!.addNode(newNode, planeAnchor: anchor);
+      await Future.delayed(const Duration(seconds: 2));
     }
   }
 
@@ -241,11 +219,10 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
             scale: Vector3(0.2, 0.2, 0.2),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-        bool? didAddNodeToAnchor = await this
-            .arObjectManager!
-            .addNode(newNode, planeAnchor: newAnchor);
+        bool? didAddNodeToAnchor =
+            await arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
         if (didAddNodeToAnchor!) {
-          this.nodes.add(newNode);
+          nodes.add(newNode);
           print("this is a node = >${nodes}");
           print("The location is :${ARLocationManager().currentLocation}");
         } else {
