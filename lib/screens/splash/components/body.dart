@@ -1,11 +1,8 @@
-// TODO Implement this library.import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants.dart';
-//import 'package:flutter_application_1/screens/sign_in/sign_in_screen.dart';
+import 'package:flutter_application_1/screens/sign_in/sign_in_screen.dart';
 import 'package:flutter_application_1/size_config.dart';
 
-// This is the best practice
-import '../../components/splash_content.dart';
 import '../components/splash_content.dart';
 import '../../../components/default_button.dart';
 
@@ -30,6 +27,7 @@ class _BodyState extends State<Body> {
       "image": "assets/images/splash_3.png"
     },
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -71,7 +69,7 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Continue",
                       press: () {
-                        //Navigator.pushNamed(context, SignInScreen.routeName);
+                        Navigator.pushNamed(context, SignInScreen.routeName);
                       },
                     ),
                     Spacer(),
