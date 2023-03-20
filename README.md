@@ -3,6 +3,7 @@
 ## Stack
 
 - Flutter
+- ARCore/ARkit
 - NodeJs
 - PostgreSQL
 - Prisma
