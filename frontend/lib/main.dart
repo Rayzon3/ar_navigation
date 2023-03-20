@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   static const String _title = 'AR Plugin Demo';
 
   @override
+
   void initState() {
     super.initState();
     initPlatformState();
