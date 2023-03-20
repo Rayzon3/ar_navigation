@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:ar_flutter_plugin/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin/managers/ar_object_manager.dart';
@@ -16,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'dart:math';
 import 'package:dio/dio.dart';
+import 'package:flutter/src/material/colors.dart';
 
 final dio = Dio();
 
@@ -45,8 +45,10 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xff000000),
         appBar: AppBar(
           title: const Text('AR Navigation'),
+          backgroundColor: Color(0xff000000),
         ),
         body: Container(
             padding: const EdgeInsets.all(16),
@@ -62,13 +64,23 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                          onPressed: placeduck, child: const Text("Add Node")),
+                        onPressed: placeduck,
+                        child: const Text("Add Node"),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff1ce0e2)),
+                      ),
                       ElevatedButton(
-                          onPressed: onUpload,
-                          child: const Text("Upload Path 🚀")),
+                        onPressed: onUpload,
+                        child: const Text("Upload Path 🚀"),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff1ce0e2)),
+                      ),
                       ElevatedButton(
-                          onPressed: onFetchARNodes,
-                          child: const Text("Get Path")),
+                        onPressed: onFetchARNodes,
+                        child: const Text("Get Path"),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff1ce0e2)),
+                      ),
                     ]),
               )
             ])));
@@ -108,16 +120,23 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   }
 
   void onUpload() async {
+    var params = {
+      "museumID": "clf6q8xxj0002ufp455wp4jci",
+      "arAnchorList": anchors
+    };
+
     var res = await dio.post(
-        "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/uploadPath",
-        data: {"arAnchorList": anchors});
+        "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/uploadPath",
+        data: jsonEncode(params));
     print(res);
     onRemoveEverything();
   }
 
   void onFetchARNodes() async {
     var res = await dio.get(
-        "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/getPath");
+        "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/getPath/clf6q8xxj0002ufp455wp4jci");
+
+    print(res.data[0]["transformation"]);
 
     var newNode = ARNode(
         type: NodeType.webGLB,

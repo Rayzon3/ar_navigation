@@ -1,16 +1,31 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:ar_flutter_plugin/ar_flutter_plugin.dart';
+import 'package:frontend/path/createPath.dart';
+import 'package:frontend/screens/museum_owner.dart';
+import 'package:frontend/screens/owner_profile.dart';
+import 'package:frontend/screens/qr_gen.dart';
+import 'package:frontend/screens/qr_scan.dart';
 
-import 'path/createPath.dart';
-import 'package:http/http.dart' as http;
+import 'models/Museum.dart';
+import 'theme.dart';
+import 'constants.dart';
+import 'routs.dart';
+import 'package:hive/hive.dart';
+import 'screens/splash/splash_screen.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  // await Hive.initFlutter();
+  // Hive.init(appDocumentDirectory.path);
+  await Hive.initFlutter();
+  var box = await Hive.openBox("user");
   runApp(MyApp());
 }
 
@@ -21,7 +36,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  static const String _title = 'AR Navigation';
+  static const String _title = 'AR Plugin Demo';
 
   @override
   void initState() {
@@ -50,37 +65,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   void testConn() async {
-    Response res = await dio.get(
-        "https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/path/getPath");
-    var x = res.data[0]["transformation"];
-    print(x[0].runtimeType);
-    // ARTransformation arTransformation =
-    //     ARTransformation.fromJson(jsonDecode(res.data));
-    // List<dynamic> data = jsonDecode(res.data);
-
-    // for (var ARnode in data) {
-    //   print(ARnode["transformation"]);
-    // }
+    var res = await dio.get("https://203d-117-205-142-162.ngrok.io");
+    print(res);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text(_title),
-        ),
-        body: Column(children: [
-          Text('Running on: $_platformVersion\n'),
-          Expanded(
-            child: ExampleList(),
-          ),
-        ]),
-        // body: ElevatedButton(
-        //   onPressed: testConn,
-        //   child: const Text("Test Backend Conn"),
-        // ),
+        backgroundColor: Colors.black,
+
+        // body: Column(children: [
+        //   Text('Running on: $_platformVersion\n'),
+        //   Expanded(
+        //     child: ExampleList(),
+        //   ),
+        // ]),
+        // body: MuseumOwnerPage(),
       ),
+      theme: theme(),
+      initialRoute: SplashScreen.routeName,
+      routes: routes,
     );
   }
 }
@@ -92,8 +97,8 @@ class ExampleList extends StatelessWidget {
   Widget build(BuildContext context) {
     final examples = [
       Example(
-          'Create Custom Map',
-          '',
+          'Object Transformation Gestures',
+          'Rotate and Pan Objects',
           () => Navigator.push(context,
               MaterialPageRoute(builder: (context) => ObjectGesturesWidget()))),
     ];

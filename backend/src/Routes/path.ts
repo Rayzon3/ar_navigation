@@ -4,6 +4,6 @@ import { getARAnchors, uploadARAnchors } from '../Controllers/arAnchor.controlle
 const router = Router();
 
 router.post("/uploadPath", uploadARAnchors)
-router.get("/getPath", getARAnchors)
+router.get("/getPath/:museumID", getARAnchors)
 
 export default router

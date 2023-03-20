@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
     const userData = await prisma.museumOwner.findFirst({
       where: {
         email,
-        password
+        password,
       },
     });
 
@@ -57,12 +57,77 @@ export const login = async (req: Request, res: Response) => {
         .status(404)
         .json({ username: "Worng username and password combination !!" });
 
-    //gen JWT 
+    //gen JWT
     const token = jwt.sign({ email }, process.env.JWT_SECRET!);
 
-    return res.json({"userData": userData, "token": token})
+    const updatedUserData = await prisma.museumOwner.update({
+      where: {
+        email,
+      },
+      data: {
+        token,
+      }
+    });
+
+    const ownerData = await prisma.museumOwner.findFirst({
+      where: {
+        email
+      },
+      select: {
+        firstName: true,
+        lastName: true,
+        token: true,
+        museum: {
+          select: {
+            id: true,
+            museumName: true
+          }
+        }
+      }
+    }) 
+
+    return res.json({ userData: ownerData });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const addMuseumDetails = async (req: Request, res: Response) => {
+  const { ownerID, inTime, outTime, tags, museumName, aboutMuseum } = req.body;
+
+  try {
+    const museumData = await prisma.museumOwner.update({
+      where: {
+        id: ownerID,
+      },
+      data: {
+        museum: {
+          create: {
+            museumName,
+            aboutMuseum,
+            inTime,
+            outTime,
+            tags,
+          },
+        },
+      },
+    });
+
+    // const museumData = await prisma.museum.create({
+    //   data: {
+    //     onwerID,
+    //     museumName,
+    //     aboutMuseum,
+    //     inTime,
+    //     outTime,
+    //     tags
+    //   }
+    // })
+    return res.json(museumData);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+

@@ -2,8 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 
-import pathRoutes from "../Routes/path"
-import museumOwnerRoutes from "../Routes/museumOwner"
+import pathRoutes from "../src/Routes/path"
+import museumOwnerRoutes from "../src/Routes/museumOwner"
+import touristRoutes from "../src/Routes/tourist"
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api/path", pathRoutes)
 app.use("/api/museumOwner", museumOwnerRoutes)
+app.use("/api/tourist", touristRoutes)
 
 
 
