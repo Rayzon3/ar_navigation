@@ -24,6 +24,13 @@ class _Signup extends State<Signup> {
   String? mobile;
   String? lname;
   String? fname;
+  var tags = [];
+  bool flag1 = false;
+  bool flag2 = false;
+  bool flag3 = false;
+  bool flag4 = false;
+  bool flag5 = false;
+  bool flag6 = false;
 
   void save() async {
     var params = {
@@ -32,10 +39,11 @@ class _Signup extends State<Signup> {
       "firstName": fname,
       "mobileNum": mobile,
       "lastName": lname,
+      "preferences": tags,
     };
 
     Response response = await dio.post(
-        'https://35f6-2401-4900-1c52-2b33-b5b1-9129-2afd-1b03.in.ngrok.io/api/tourist/register',
+        'https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/tourist/register',
         data: jsonEncode(params));
     print('nasnasjn ios r${response.data}');
   }
@@ -120,6 +128,111 @@ class _Signup extends State<Signup> {
                           floatingLabelBehavior: FloatingLabelBehavior.auto,
                           suffixIcon: Icon(Icons.lock)),
                     ),
+                  ),
+                  SizedBox(height: 10),
+                  Text('What are your preferences?',
+                      style: TextStyle(color: Color(0xfffa256a))),
+                  SizedBox(height: 10),
+                  Wrap(
+                    spacing: 10,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () => {
+                          setState(() => flag1 = !flag1),
+                          if (flag1)
+                            {tags.add('Science')}
+                          else if (!flag1)
+                            {tags.remove('Science')},
+                          print(tags)
+                        },
+                        child: Text('Science'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: flag1
+                              ? Colors.red
+                              : Colors.teal, // This is what you need!
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {
+                          setState(() => flag2 = !flag2),
+                          if (flag2)
+                            {tags.add('Transport')}
+                          else if (!flag2)
+                            {tags.remove('Transport')},
+                          print(tags)
+                        },
+                        child: Text('Transport'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: flag2
+                              ? Colors.red
+                              : Colors.teal, // This is what you need!
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {
+                          setState(() => flag3 = !flag3),
+                          if (flag3)
+                            {tags.add('Space')}
+                          else if (!flag3)
+                            {tags.remove('Space')},
+                          print(tags)
+                        },
+                        child: Text('Space'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: flag3
+                              ? Colors.red
+                              : Colors.teal, // This is what you need!
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {
+                          setState(() => flag4 = !flag4),
+                          if (flag4)
+                            {tags.add('Prehistoric')}
+                          else if (!flag4)
+                            {tags.remove('Prehistoric')},
+                          print(tags)
+                        },
+                        child: Text('Prehistoric'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: flag4
+                              ? Colors.red
+                              : Colors.teal, // This is what you need!
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {
+                          setState(() => flag5 = !flag5),
+                          if (flag5)
+                            {tags.add('Defense')}
+                          else if (!flag5)
+                            {tags.remove('Defense')},
+                          print(tags)
+                        },
+                        child: Text('Defense'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: flag5
+                              ? Colors.red
+                              : Colors.teal, // This is what you need!
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => {
+                          setState(() => flag6 = !flag6),
+                          if (flag6)
+                            {tags.add('Others')}
+                          else if (!flag6)
+                            {tags.remove('Others')},
+                          print(tags)
+                        },
+                        child: Text('Others'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: flag6
+                              ? Colors.red
+                              : Colors.teal, // This is what you need!
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 20),

@@ -101,13 +101,15 @@ class _MuseumList extends State<MuseumList> {
                                       SizedBox(
                                         height: 5,
                                       ),
-                                      Row(
+                                      Wrap(
+                                          spacing: 6,
                                           children: it.tags!.map((e) {
-                                        return Container(
-                                            child: Text(e,
-                                                style: TextStyle(
-                                                    color: Color(0xff1ce0e2))));
-                                      }).toList())
+                                            return Container(
+                                                child: Text(e,
+                                                    style: TextStyle(
+                                                        color: Color(
+                                                            0xff1ce0e2))));
+                                          }).toList())
                                     ],
                                   )),
                             );

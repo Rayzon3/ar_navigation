@@ -20,7 +20,8 @@ import 'package:flutter/src/material/colors.dart';
 final dio = Dio();
 
 class ObjectGesturesWidget extends StatefulWidget {
-  ObjectGesturesWidget({Key? key}) : super(key: key);
+  ObjectGesturesWidget({Key? key, required this.museumID}) : super(key: key);
+  final String museumID;
   @override
   _ObjectGesturesWidgetState createState() => _ObjectGesturesWidgetState();
 }
@@ -47,7 +48,7 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
     return Scaffold(
         backgroundColor: Color(0xff000000),
         appBar: AppBar(
-          title: const Text('AR Navigation'),
+          title: const Text('Place nodes, create your path!'),
           backgroundColor: Color(0xff000000),
         ),
         body: Container(
@@ -120,10 +121,7 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   }
 
   void onUpload() async {
-    var params = {
-      "museumID": "clf6q8xxj0002ufp455wp4jci",
-      "arAnchorList": anchors
-    };
+    var params = {"museumID": widget.museumID, "arAnchorList": anchors};
 
     var res = await dio.post(
         "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/uploadPath",
@@ -134,15 +132,15 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
 
   void onFetchARNodes() async {
     var res = await dio.get(
-        "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/getPath/clf6q8xxj0002ufp455wp4jci");
+        "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/getPath/${widget.museumID}");
 
     print(res.data[0]["transformation"]);
 
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
-            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-        scale: Vector3(0.2, 0.2, 0.2),
+            "https://github.com/Rayzon3/ar_navigation/raw/master/sphere/scene.glb",
+        scale: Vector3(10, 10, 10),
         position: Vector3(0.011439, -0.00871425, -0.5),
         rotation: Vector4(0.534616, -0.525168, -0.468367, 0.467992));
 
@@ -197,8 +195,8 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
-            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-        scale: Vector3(0.2, 0.2, 0.2),
+            "https://github.com/Rayzon3/ar_navigation/raw/master/sphere/scene.glb",
+        scale: Vector3(10, 10, 10),
         position: Vector3(0.011439, -0.00871425, -0.5),
         rotation: Vector4(0.534616, -0.525168, -0.468367, 0.467992));
     this.arObjectManager!.addNode(newNode, planeAnchor: anchor);
@@ -234,8 +232,8 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
         var newNode = ARNode(
             type: NodeType.webGLB,
             uri:
-                "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-            scale: Vector3(0.2, 0.2, 0.2),
+                "https://github.com/Rayzon3/ar_navigation/raw/master/sphere/scene.glb",
+            scale: Vector3(10, 10, 10),
             position: Vector3(0.0, 0.0, 0.0),
             rotation: Vector4(1.0, 0.0, 0.0, 0.0));
         bool? didAddNodeToAnchor =

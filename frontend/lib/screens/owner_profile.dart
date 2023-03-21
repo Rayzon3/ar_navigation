@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Text(
                                     "${widget.firstName} ${widget.lastName}",
                                     style: TextStyle(
-                                      fontSize: 28,
+                                      fontSize: 24,
                                       color: const Color(0xFFFFFFFF),
                                     ),
                                   ),
@@ -107,13 +107,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              "Museum Name: ${widget.museumName}",
-                              style: TextStyle(
-                                  fontFamily: "montserrat",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Museum Name: ",
+                                  style: TextStyle(
+                                      fontFamily: "montserrat",
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  "${widget.museumName}",
+                                  style: TextStyle(
+                                      fontFamily: "montserrat",
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ],

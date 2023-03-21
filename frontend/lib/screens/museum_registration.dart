@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:frontend/components/custom_surfix_icon.dart';
 import 'package:frontend/models/Museum.dart';
+import 'package:frontend/screens/owner_login.dart';
 import 'package:frontend/screens/sign_in/components/sign_form.dart';
 import 'package:frontend/screens/sign_in/sign_in_screen.dart';
 import 'package:frontend/screens/write_review.dart';
@@ -91,8 +92,6 @@ class _Museum extends State<MuseumRegistration> {
                         style: TextStyle(color: Colors.white),
                         // obscureText: true,
                         onSaved: (newValue) => museumName = newValue,
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
                         onChanged: (value) {
                           setState(() {
                             museumName = value;
@@ -289,8 +288,10 @@ class _Museum extends State<MuseumRegistration> {
                       GestureDetector(
                           onTap: () {
                             save();
-                            Navigator.pushNamed(
-                                context, SignInScreen.routeName);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Login()));
                           },
                           child: Container(
                               margin:

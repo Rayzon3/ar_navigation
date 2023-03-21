@@ -65,18 +65,18 @@ class _ObjectGesturesWidgetState extends State<ARNavigationPage> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(
-                        onPressed: placeduck,
-                        child: const Text("Add Node"),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff1ce0e2)),
-                      ),
-                      ElevatedButton(
-                        onPressed: onUpload,
-                        child: const Text("Upload Path 🚀"),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xff1ce0e2)),
-                      ),
+                      // ElevatedButton(
+                      //   onPressed: placeduck,
+                      //   child: const Text("Add Node"),
+                      //   style: ElevatedButton.styleFrom(
+                      //       backgroundColor: Color(0xff1ce0e2)),
+                      // ),
+                      // ElevatedButton(
+                      //   onPressed: onUpload,
+                      //   child: const Text("Upload Path 🚀"),
+                      //   style: ElevatedButton.styleFrom(
+                      //       backgroundColor: Color(0xff1ce0e2)),
+                      // ),
                       ElevatedButton(
                         onPressed: onFetchARNodes,
                         child: const Text("Get Path"),
@@ -128,7 +128,7 @@ class _ObjectGesturesWidgetState extends State<ARNavigationPage> {
     };
 
     var res = await dio.post(
-        "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/uploadPath",
+        "https://github.com/Rayzon3/ar_navigation/raw/master/sphere/scene.glb",
         data: jsonEncode(params));
     print(res);
     onRemoveEverything();
@@ -142,8 +142,8 @@ class _ObjectGesturesWidgetState extends State<ARNavigationPage> {
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
-            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-        scale: Vector3(0.2, 0.2, 0.2),
+            "https://github.com/Rayzon3/ar_navigation/raw/master/sphere/scene.glb",
+        scale: Vector3(10, 10, 10),
         position: Vector3(0.011439, -0.00871425, -0.5),
         rotation: Vector4(0.534616, -0.525168, -0.468367, 0.467992));
 
@@ -198,8 +198,8 @@ class _ObjectGesturesWidgetState extends State<ARNavigationPage> {
     var newNode = ARNode(
         type: NodeType.webGLB,
         uri:
-            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-        scale: Vector3(0.2, 0.2, 0.2),
+            "https://github.com/Rayzon3/ar_navigation/raw/master/sphere/scene.glb",
+        scale: Vector3(10, 10, 10),
         position: Vector3(0.011439, -0.00871425, -0.5),
         rotation: Vector4(0.534616, -0.525168, -0.468367, 0.467992));
     this.arObjectManager!.addNode(newNode, planeAnchor: anchor);
@@ -235,10 +235,10 @@ class _ObjectGesturesWidgetState extends State<ARNavigationPage> {
         var newNode = ARNode(
             type: NodeType.webGLB,
             uri:
-                "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-            scale: Vector3(0.2, 0.2, 0.2),
+                "https://github.com/Rayzon3/ar_navigation/raw/master/sphere/scene.glb",
+            scale: Vector3(10, 10, 10),
             position: Vector3(0.0, 0.0, 0.0),
-            rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+            rotation: Vector4(0.0, 0.0, 0.0, 0.0));
         bool? didAddNodeToAnchor =
             await arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
         if (didAddNodeToAnchor!) {

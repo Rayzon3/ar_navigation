@@ -37,13 +37,19 @@ class _Owner extends State<Owner> {
       "lastName": lname,
     };
 
-    Response response = await dio.post(
-        'https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/museumOwner/register',
-        data: jsonEncode(params));
-    // print('nasnasjn ios r${response.data['id']}');
-    setState(() {
-      id = response.data['id'];
-    });
+    dio
+        .post(
+            'https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/museumOwner/register',
+            data: jsonEncode(params))
+        .then((value) => {
+              setState(() {
+                id = value.data['id'];
+              }),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MuseumRegistration(oid: id)))
+            });
   }
 
   Widget build(BuildContext context) {
@@ -170,11 +176,6 @@ class _Owner extends State<Owner> {
                   GestureDetector(
                       onTap: () {
                         save();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    MuseumRegistration(oid: id)));
                       },
                       child: Container(
                           margin: EdgeInsets.only(top: 20, left: 8, right: 8),

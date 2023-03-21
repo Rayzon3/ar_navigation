@@ -43,6 +43,7 @@ model tourist {
   mobileNum String?    @unique
   password  String?
   comments  comments[]
+  prefrences String[]
   token     String?
 }
 

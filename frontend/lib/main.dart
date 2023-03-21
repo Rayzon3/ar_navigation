@@ -72,6 +72,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.black,
 
@@ -96,11 +97,11 @@ class ExampleList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final examples = [
-      Example(
-          'Object Transformation Gestures',
-          'Rotate and Pan Objects',
-          () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => ObjectGesturesWidget()))),
+      // Example(
+      //     'Object Transformation Gestures',
+      //     'Rotate and Pan Objects',
+      //     () => Navigator.push(context,
+      //         MaterialPageRoute(builder: (context) => ObjectGesturesWidget()))),
     ];
     return ListView(
       children:

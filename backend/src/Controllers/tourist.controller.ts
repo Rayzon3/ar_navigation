@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 
 export const register = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, password, mobileNum } = req.body;
+  const { firstName, lastName, email, password, mobileNum, prefrences } = req.body;
 
   try {
     let errors: any = {};
@@ -31,6 +31,7 @@ export const register = async (req: Request, res: Response) => {
         email,
         mobileNum,
         password,
+        prefrences
       },
     });
 

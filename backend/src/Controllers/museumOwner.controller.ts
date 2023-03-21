@@ -97,6 +97,11 @@ export const addMuseumDetails = async (req: Request, res: Response) => {
   const { ownerID, inTime, outTime, tags, museumName, aboutMuseum } = req.body;
 
   try {
+
+    for(var i = 0; i < tags.length; i++) {
+      tags[i] = "#" + tags[i]
+    }
+
     const museumData = await prisma.museumOwner.update({
       where: {
         id: ownerID,
@@ -113,17 +118,7 @@ export const addMuseumDetails = async (req: Request, res: Response) => {
         },
       },
     });
-
-    // const museumData = await prisma.museum.create({
-    //   data: {
-    //     onwerID,
-    //     museumName,
-    //     aboutMuseum,
-    //     inTime,
-    //     outTime,
-    //     tags
-    //   }
-    // })
+    
     return res.json(museumData);
   } catch (error) {
     console.log(error);
