@@ -21,7 +21,7 @@ class MuseumList extends StatefulWidget {
 class _MuseumList extends State<MuseumList> {
   Future<Museum> getMuseum() async {
     Response data = await dio.get(
-        'https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/tourist/museumsFeed');
+        'https://d96b-2401-4900-1c53-2ed3-b494-7129-1648-a25d.in.ngrok.io/api/tourist/museumsFeed');
     print('User info ${data.data}');
     Museum museum = Museum.fromJson(data.data);
     return museum;

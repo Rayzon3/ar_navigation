@@ -27,7 +27,7 @@ class _MuseumDescription extends State<MuseumDescription> {
     var params = {"museumID": widget.id};
 
     Response data = await dio.get(
-        'https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/tourist/museumDetail',
+        'https://d96b-2401-4900-1c53-2ed3-b494-7129-1648-a25d.in.ngrok.io/api/tourist/museumDetail',
         data: jsonEncode(params));
     print('User info ${data.data}');
     Description description = Description.fromJson(data.data);

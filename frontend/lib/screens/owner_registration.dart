@@ -39,7 +39,7 @@ class _Owner extends State<Owner> {
 
     dio
         .post(
-            'https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/museumOwner/register',
+            'https://d96b-2401-4900-1c53-2ed3-b494-7129-1648-a25d.in.ngrok.io/api/museumOwner/register',
             data: jsonEncode(params))
         .then((value) => {
               setState(() {

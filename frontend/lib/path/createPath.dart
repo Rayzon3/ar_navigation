@@ -124,7 +124,7 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
     var params = {"museumID": widget.museumID, "arAnchorList": anchors};
 
     var res = await dio.post(
-        "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/uploadPath",
+        "https://d96b-2401-4900-1c53-2ed3-b494-7129-1648-a25d.in.ngrok.io/api/path/uploadPath",
         data: jsonEncode(params));
     print(res);
     onRemoveEverything();
@@ -132,7 +132,7 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
 
   void onFetchARNodes() async {
     var res = await dio.get(
-        "https://cf64-2401-4900-1c52-2b33-f87d-8874-da4f-7372.in.ngrok.io/api/path/getPath/${widget.museumID}");
+        "https://d96b-2401-4900-1c53-2ed3-b494-7129-1648-a25d.in.ngrok.io/api/path/getPath/${widget.museumID}");
 
     print(res.data[0]["transformation"]);
 

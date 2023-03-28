@@ -65,7 +65,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void testConn() async {
-    var res = await dio.get("https://203d-117-205-142-162.ngrok.io");
+    var res = await dio.get(
+        "https://d96b-2401-4900-1c53-2ed3-b494-7129-1648-a25d.in.ngrok.io");
     print(res);
   }
 
